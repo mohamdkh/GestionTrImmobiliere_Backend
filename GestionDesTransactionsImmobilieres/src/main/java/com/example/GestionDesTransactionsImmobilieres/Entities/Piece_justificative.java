@@ -21,6 +21,7 @@ public class Piece_justificative {
             name = "native",
             strategy = "native"
     )
+    @Getter @Setter
     private int id;
     @Getter @Setter
     @Column(name = "picture", length = 1000)

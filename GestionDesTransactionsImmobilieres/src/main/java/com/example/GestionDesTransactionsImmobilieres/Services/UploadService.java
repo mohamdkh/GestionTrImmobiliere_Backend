@@ -27,15 +27,17 @@ public class UploadService {
     @Autowired
     private Piece_justifRepository ReposJustif;
     private String FullPath;
-    public String uplaodImage( MultipartFile file) {
+    public int uplaodImage( MultipartFile file) {
         try{
 
             Piece_justificative img = new Piece_justificative(compressBytes(file.getBytes()), file.getOriginalFilename());
-            ReposJustif.save(img);
+            Piece_justificative img1=ReposJustif.save(img);
+            return img1.getId();
         }catch (Exception e){
-            return e.getMessage();
+            System.out.println( e.getMessage());
+            return 0;
         }
-        return "l'importation a été bien exécuté";
+
     }
     public String getImage(int id,String path) throws IOException {
         FullPath="";
@@ -44,7 +46,7 @@ public class UploadService {
         // Piece_justificative img = new Piece_justificative(decompressBytes(retrievedImage.get().getImage()));
         try (FileOutputStream fileOuputStream = new FileOutputStream(path+"/"+FullName)){
             fileOuputStream.write(decompressBytes(retrievedImage.get().getImage()));
-            return path+"/"+FullName;
+            return FullName;
         }catch (Exception e){
             return "error :" + e.getMessage();
         }

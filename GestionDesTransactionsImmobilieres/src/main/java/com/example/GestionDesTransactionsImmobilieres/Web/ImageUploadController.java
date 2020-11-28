@@ -26,8 +26,9 @@ public class ImageUploadController {
     @Autowired
     private UploadService UploadService;
     @PostMapping("/uploadJustif")
-    public ResponseEntity<String> uplaodImageJustif(@RequestParam("imageFile") MultipartFile file) throws IOException {
-        return  ResponseEntity.status(HttpStatus.OK).body(UploadService.uplaodImage(file));
+    public int uplaodImageJustif(@RequestParam("imageFile") MultipartFile file) throws IOException {
+
+        return  UploadService.uplaodImage(file);
     }
     @GetMapping(path = { "/getJustif" })
     public String getImageJustif(@RequestParam("id") int id,@RequestParam("path") String path) throws IOException {

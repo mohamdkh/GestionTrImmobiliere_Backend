@@ -17,12 +17,15 @@ public class Intermediaire {
             name = "native",
             strategy = "native"
     )
+    @Getter @Setter
     int id;
     @Getter
     @Setter
-    private String Nom;
+    private String nom;
     @Getter @Setter
-    private String Prenom;
+    private String prenom;
+    @Getter @Setter
+    private String email;
     @Getter @Setter
     private String tel;
     @Getter @Setter
@@ -35,4 +38,26 @@ public class Intermediaire {
     private int id_user;
     @Getter @Setter
     private int id_piece_justif;
+    @Getter @Setter
+    private String status;
+    @Getter @Setter
+    private String adresse;
+
+    public Intermediaire(String nom, String prenom, String email, String tel, int commune1, int commune2, int commune3, int id_user, int id_piece_justif,String status,String adresse) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.tel = tel;
+        this.commune1 = commune1;
+        this.commune2 = commune2;
+        this.commune3 = commune3;
+        this.id_user = id_user;
+        this.id_piece_justif = id_piece_justif;
+        this.status=status;
+        this.adresse=adresse;
+    }
+
+    public Intermediaire() {
+
+    }
 }

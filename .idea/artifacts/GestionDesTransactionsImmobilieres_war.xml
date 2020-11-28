@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="GestionDesTransactionsImmobilieres:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/GestionDesTransactionsImmobilieres_war</output-path>
+    <root id="archive" name="BackendGTI.war">
+      <element id="artifact" artifact-name="GestionDesTransactionsImmobilieres:war exploded" />
+    </root>
+  </artifact>
+</component>
