@@ -22,10 +22,12 @@ public class InscriptionService {
     private UtilisateurRepository  UtilisateurRepos;
     @Autowired
     private CommuneRepository CommuneRepos;
+    @Autowired
     private JavaMailSender javaMailSender;
     private  List<Intermediaire> listDemandes;
     private UserInfos userinfos;
     private Optional<communes> commune;
+    private Intermediaire intermediaire;
     private String[] Regions={"Tanger-Tétouan Al Houceima","Oriental-Rif","Fes-Meknes","Rabat-Salé-Kenitra",
     "BeniMellal-khenifra","Casablanca - Settat","Marrakech - Safi","Drâa‐Tafilalet","Souss-Massa","Guelmim‐Oued Noun",
     "Laayoun Sakia El Hamra","Dakhla Oued Dahab"};
@@ -57,10 +59,13 @@ public class InscriptionService {
         });
         return listDemandes;
     }
-    public void StatusDemandeAdhesion(int id,String status){
-        Optional<Intermediaire> findIntermediate=IntermediaireRepos.findById(id);
-        if(findIntermediate.isPresent()){
-            Intermediaire intermediaire= findIntermediate.get();
+    public void StatusDemandeAdhesion(long id,String status){
+    	intermediaire=new Intermediaire();
+    	IntermediaireRepos.findAll().forEach(inter->{
+    		if(inter.getId()==id) {
+    			intermediaire=inter;
+    		}
+    	});
             intermediaire.setStatus(status);
             flag= intermediaire.getId_user();
             UtilisateurRepos.findAll().forEach(elem->{
@@ -89,14 +94,18 @@ public class InscriptionService {
             IntermediaireRepos.save(intermediaire);
         }
 
-    }
+    
     public UserInfos GetInfosIntermmediaire(int id){
         flag=1;
+        intermediaire=new Intermediaire();
         userinfos=new UserInfos();
-        Optional<Intermediaire> findIntermediate=IntermediaireRepos.findById(id);
-        if(findIntermediate.isPresent()){
-            Intermediaire intermediaire= findIntermediate.get();
-            userinfos.setId_user(intermediaire.getId());
+        IntermediaireRepos.findAll().forEach(i->{
+            if(i.getId()==id){
+                intermediaire=i;
+            }
+        });
+        if(intermediaire!=null){
+            userinfos.setId_user((int) intermediaire.getId());
             userinfos.setEmail(intermediaire.getEmail());
             userinfos.setTel(intermediaire.getTel());
             userinfos.setNom(intermediaire.getNom());

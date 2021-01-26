@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class GestionDesTransactionsImmobilieresApplication extends SpringBootServletInitializer {
@@ -14,7 +15,5 @@ public class GestionDesTransactionsImmobilieresApplication extends SpringBootSer
 	public static void main(String[] args) {
 		SpringApplication.run(GestionDesTransactionsImmobilieresApplication.class, args);
 	}
-
-
-
 }
+

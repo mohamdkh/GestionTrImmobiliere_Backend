@@ -18,9 +18,18 @@ public class DiscussionController {
 
        discussionService.SendMail(discussion);
     }
-    @GetMapping("getAllMails")
-    public List<Discussion> getAllMails(){
+    @GetMapping("getMails")
+    public List<Discussion> getAllMails(@RequestParam("status") String status){
 
-        return discussionService.getAllMessage();
+        return discussionService.getAllMessage(status);
+    }
+    @GetMapping("getMailByID")
+    public Discussion getAllMails(@RequestParam("id") Long id){
+
+        return discussionService.GetMessageByID(id);
+    }
+    @GetMapping("/changeStatus")
+    public boolean changeStatus(@RequestParam("id") Long id){
+        return discussionService.changeStatus(id);
     }
 }

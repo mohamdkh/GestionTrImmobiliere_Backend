@@ -8,9 +8,10 @@ import javax.persistence.*;
 
 @Entity
 public class photo_bien {
-    public photo_bien(byte[] image,String extension){
-        this.FullName=extension;
+    public photo_bien(byte[] image,String FullName,int id_annonce){
+        this.FullName=FullName;
         this.image=image;
+        this.id_annonce=id_annonce;
     }
     @Id
     @GeneratedValue(
@@ -29,6 +30,8 @@ public class photo_bien {
     private byte[] image;
     @Getter @Setter
     private String FullName;
+    @Getter @Setter
+    private int id_annonce;
 
     public photo_bien() {
         super();

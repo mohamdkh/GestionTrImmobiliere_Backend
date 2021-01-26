@@ -24,9 +24,9 @@ public class InscriptionController {
         return service.GetDemandeAdhesion(status);
     }
     @GetMapping(path = {"/Changestatus" })
-    public void StatusDemandeAdhesion(@RequestParam("id") String id,@RequestParam("status") String status) throws IOException {
-            System.out.println("Changestatus");
-         service.StatusDemandeAdhesion(Integer.parseInt(id),status);
+    public void StatusDemandeAdhesion(@RequestParam("id") int id,@RequestParam("status") String status) throws IOException {
+           
+         service.StatusDemandeAdhesion(id,status);
     }
     @GetMapping(path = {"/GetUserInfos" })
     public UserInfos GetUserInfos(@RequestParam("id") String id) throws IOException {

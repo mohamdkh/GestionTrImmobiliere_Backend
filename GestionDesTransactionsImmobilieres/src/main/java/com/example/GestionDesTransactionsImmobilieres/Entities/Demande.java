@@ -22,23 +22,31 @@ public class Demande {
             name = "native",
             strategy = "native"
     )
-    private int id;
     @Getter
     @Setter
-    private String Nom_demandeur;
+    private long id;
+    @Getter
+    @Setter
+    private String nom_demandeur;
     @Getter
     @Setter
     private String tel;
     @Getter
     @Setter
     private String email;
+    @Getter
+    @Setter
+    private String status;
+    @Getter
+    @Setter
+    private long id_annonce;
     @JsonFormat(pattern="yyyy-MM-dd")
     @Getter
     @Setter
     private Date date;
 
     public Demande(String nom_demandeur, String tel, String email, Date date) {
-        Nom_demandeur = nom_demandeur;
+        this.nom_demandeur = nom_demandeur;
         this.tel = tel;
         this.email = email;
         this.date = date;

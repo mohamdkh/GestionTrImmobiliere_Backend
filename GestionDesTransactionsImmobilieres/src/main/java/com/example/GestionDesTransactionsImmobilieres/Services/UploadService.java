@@ -6,13 +6,14 @@ import com.example.GestionDesTransactionsImmobilieres.Entities.Piece_justificati
 import com.example.GestionDesTransactionsImmobilieres.Entities.photo_bien;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
@@ -27,10 +28,13 @@ public class UploadService {
     @Autowired
     private Piece_justifRepository ReposJustif;
     private String FullPath;
+    private File file;
+    private  List<photo_bien> photosAnnonce;
     public int uplaodImage( MultipartFile file) {
         try{
 
             Piece_justificative img = new Piece_justificative(compressBytes(file.getBytes()), file.getOriginalFilename());
+            img.setExtension(file.getContentType());
             Piece_justificative img1=ReposJustif.save(img);
             return img1.getId();
         }catch (Exception e){
@@ -39,40 +43,45 @@ public class UploadService {
         }
 
     }
-    public String getImage(int id,String path) throws IOException {
-        FullPath="";
+    public Piece_justificative getImage(int id) throws IOException {
         final Optional<Piece_justificative> retrievedImage = JustificateurRepos.findById(id);
-        String FullName =retrievedImage.get().getFullName();
-        // Piece_justificative img = new Piece_justificative(decompressBytes(retrievedImage.get().getImage()));
-        try (FileOutputStream fileOuputStream = new FileOutputStream(path+"/"+FullName)){
-            fileOuputStream.write(decompressBytes(retrievedImage.get().getImage()));
-            return FullName;
-        }catch (Exception e){
-            return "error :" + e.getMessage();
+        if(retrievedImage.isPresent()){
+            String FullName =retrievedImage.get().getFullName();
+            Piece_justificative img = new Piece_justificative(decompressBytes(retrievedImage.get().getImage()),
+                    retrievedImage.get().getExtension(),retrievedImage.get().getFullName());
+            return img;
         }
+        else{
+            return null;
+        }
+    }
+    public List<photo_bien> getImagesBien(long id) throws IOException {
+        photosAnnonce=new ArrayList<photo_bien>();
+       Photo_bienRepos.findAll().forEach(img->{
+           if(img.getId_annonce()==id){
+               photosAnnonce.add(new photo_bien(decompressBytes(img.getImage()),img.getFullName(), (int) img.getId_annonce()));
+           }
+       });
+       return photosAnnonce;
+
 
     }
-    public String uplaodImageBien( MultipartFile file) {
+    public String uplaodImageBien( MultipartFile file,long id) {
         try{
-            photo_bien img = new photo_bien(compressBytes(file.getBytes()), file.getOriginalFilename());
+            photo_bien img = new photo_bien(compressBytes(file.getBytes()), file.getOriginalFilename(), (int) id);
             Photo_bienRepos.save(img);
         }catch (Exception e){
             return e.getMessage();
         }
         return "l'importation a été bien exécuté";
     }
-    public String getImageBien(Long id,String path) throws IOException {
-        FullPath="";
-        final Optional<photo_bien> retrievedImage = Photo_bienRepos.findById(id);
-        String FullName =retrievedImage.get().getFullName();
-        // Piece_justificative img = new Piece_justificative(decompressBytes(retrievedImage.get().getImage()));
-        try (FileOutputStream fileOuputStream = new FileOutputStream(path+"/"+FullName)){
-            fileOuputStream.write(decompressBytes(retrievedImage.get().getImage()));
-            return path+"/"+FullName;
-        }catch (Exception e){
-            return "error :" + e.getMessage();
-        }
-
+    public List<photo_bien> GetListPhotos() {
+    	List<photo_bien> photos=new ArrayList<photo_bien>();
+    	photo_bien photo=new photo_bien();
+    	 Photo_bienRepos.findAll().forEach(elem->{
+    		photos.add(new photo_bien(decompressBytes(elem.getImage()), elem.getFullName(), elem.getId_annonce()));
+    	});
+    	 return photos;
     }
     private byte[] compressBytes(byte[] data) {
         Deflater deflater = new Deflater();

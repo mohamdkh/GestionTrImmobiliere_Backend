@@ -17,5 +17,8 @@ public class LoginController  {
         System.out.println(user.getEmail());
         return loginService.SeConnecter(user.getEmail(),user.getMot_passe());
     }
-
+    @PostMapping("/ChangePassword")
+    public boolean ChangePassword(@RequestBody Utilisateur user){
+        return loginService.ChangePassword( user.getId(),user.getMot_passe());
+    }
 }

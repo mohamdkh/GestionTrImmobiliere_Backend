@@ -10,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Discussion {
+public class AffectationAnnonce {
     @Id
     @GeneratedValue(
             strategy= GenerationType.AUTO,
@@ -25,17 +25,9 @@ public class Discussion {
     private Long id;
     @Getter
     @Setter
-    private String nom;
+    private long id_annonce;
     @Getter
     @Setter
-    private  String email;
-    @Getter
-    @Setter
-    private String tel;
-    @Getter
-    @Setter
-    private String message;
-    @Getter
-    @Setter
-    private String status;
+    private long id_intermediaire;
+
 }

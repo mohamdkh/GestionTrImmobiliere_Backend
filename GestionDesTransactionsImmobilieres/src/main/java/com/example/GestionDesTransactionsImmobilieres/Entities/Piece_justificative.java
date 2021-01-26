@@ -28,9 +28,16 @@ public class Piece_justificative {
     @Lob
     private byte[] image;
     @Getter @Setter
+    private String extension;
+    @Getter @Setter
     private String FullName;
 
     public Piece_justificative() {
         super();
+    }
+    public Piece_justificative(byte[] image,String extension,String FullName){
+        this.extension =extension;
+        this.FullName=FullName;
+        this.image=image;
     }
 }

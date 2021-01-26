@@ -20,6 +20,7 @@ public class Type_bien {
             name = "native",
             strategy = "native"
     )
+    @Getter @Setter
    private int id;
    @Getter @Setter
    private String Type;

@@ -18,7 +18,7 @@ public class Intermediaire {
             strategy = "native"
     )
     @Getter @Setter
-    int id;
+    long id;
     @Getter
     @Setter
     private String nom;
